@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-options.UseSqlServer("Server=DESKTOP-HCHKBF5\\SQLEXPRESS;Database=ApplicationDbContext;Trusted_Connection=True;"));
+options.UseSqlServer("Server=.;Database=ApplicationDbContext;Trusted_Connection=True;"));
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddTransient<IStocksService, StocksService>();
