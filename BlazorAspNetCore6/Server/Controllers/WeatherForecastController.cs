@@ -38,6 +38,7 @@ namespace BlazorAspNetCore6.Server.Controllers
 
             await foreach (var item in a)
             {
+                await Task.Delay(1000);
                 yield return item;
             }
         }

@@ -1,4 +1,5 @@
 ﻿using BlazorAspNetCore6.Shared;
+using Microsoft.AspNetCore.Components.WebAssembly.Http;
 using Project.Data.Entities;
 using System.Text.Json;
 
@@ -10,9 +11,12 @@ namespace BlazorAspNetCore6.Client.Pages
         private string a = "";
 
 
-        private async void GetFromDBAsyncEnumerable()
+        private async Task GetFromDBAsyncEnumerable()
         {
-            using HttpResponseMessage response = await Http.GetAsync("api/Stocks/StocksAsyncEnumerable", HttpCompletionOption.ResponseHeadersRead);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "weatherforecast/weather-forecast");
+            request.SetBrowserResponseStreamingEnabled(true);
+
+            using HttpResponseMessage response = await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
 
             response.EnsureSuccessStatusCode();
 
@@ -23,7 +27,7 @@ namespace BlazorAspNetCore6.Client.Pages
      new JsonSerializerOptions
      {
          PropertyNameCaseInsensitive = true,
-         DefaultBufferSize = 2
+         DefaultBufferSize = 128
      });
 
             await foreach (var item in weatherForecasts)
